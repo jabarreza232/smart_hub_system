@@ -11,7 +11,7 @@ class BookingController extends Controller
 {
     public function index(): JsonResponse
     {
-        $bookings = Booking::with(['user', 'equipment'])
+        $bookings = Booking::with(['user.profile', 'equipment'])
             ->latest()
             ->get();
 

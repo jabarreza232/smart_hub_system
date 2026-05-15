@@ -23,9 +23,12 @@ class EquipmentController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|in:workspace,studio_gear',
             'stock' => 'required|integer|min:1',
-            'status' => 'required|in:available,maintenance,in_use'
+            'status' => 'required|in:available,maintenance,in_use',
+            'sku' => 'nullable|string|max:100|unique:equipments,sku',
+            'location' => 'nullable|string|max:255',
+            'condition_notes' => 'nullable|string'
         ]);
-
+        $validated['sku'] = $validated['sku'] ?? 'SKU-' . strtoupper(uniqid());
         $equipment = Equipment::create($validated);
 
         return response()->json([
@@ -44,7 +47,7 @@ class EquipmentController extends Controller
             'name' => 'sometimes|string|max:255',
             'type' => 'sometimes|in:workspace,studio_gear',
             'stock' => 'sometimes|integer|min:0',
-            'status' => 'sometimes|in:available,maintenance,in_use'
+            'status' => 'sometimes|in:available,maintenance,in_use,retired'
         ]);
 
         $equipment->update($validated);

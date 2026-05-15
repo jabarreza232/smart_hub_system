@@ -12,14 +12,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 #[Fillable(['name', 'email', 'password', 'is_active'])]
-#[Hidden(['password', 'remember_token'])]
+#[Hidden(['password', 'remember_token', 'profile'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasApiTokens, Notifiable;
 
 
-
+    protected $appends = ['full_name'];
 
     public function role()
     {
@@ -33,7 +33,11 @@ class User extends Authenticatable
     {
         return $this->role->name === $roleName;
     }
-
+    public function getFullNameAttribute()
+    {
+        // Kita ambil full_name dari relasi profile, jika tidak ada return null
+        return $this->profile->full_name ?? null;
+    }
     /**
      * Get the attributes that should be cast.
      *

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('equipments', function (Blueprint $table) {
             $table->id();
+            $table->string('sku')->unique(); // Stock Keeping Unit / Barcode
             $table->string('name');
             $table->enum('type', ['workspace', 'studio_gear']);
             $table->integer('stock')->default(1);
