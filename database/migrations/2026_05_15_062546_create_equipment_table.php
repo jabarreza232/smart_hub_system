@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-      Schema::create('equipments', function (Blueprint $table) {
-        $table->id();
-        $table->string('name');
-        $table->enum('type', ['workspace', 'studio_gear']);
-        $table->integer('stock')->default(1);
-        $table->enum('status', ['available', 'maintenance', 'in_use'])->default('available');
-        $table->timestamps();
-    });
+        Schema::create('equipments', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->enum('type', ['workspace', 'studio_gear']);
+            $table->integer('stock')->default(1);
+            $table->string('location')->nullable(); // Contoh: "Rak 2, Loker B"
+            $table->text('condition_notes')->nullable(); // Catatan teknis alat
+
+            // Penambahan status 'retired'
+            $table->enum('status', ['available', 'maintenance', 'in_use', 'retired'])->default('available');
+            $table->timestamps();
+        });
     }
 
     /**

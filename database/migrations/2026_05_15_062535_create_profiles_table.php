@@ -16,6 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('full_name');
             $table->string('phone_number')->nullable();
+            $table->string('avatar')->nullable(); // URL gambar foto profil
+            $table->string('company_or_institution')->nullable();
+            $table->text('bio')->nullable(); // Deskripsi singkat / keahlian
             $table->timestamps();
         });
     }
